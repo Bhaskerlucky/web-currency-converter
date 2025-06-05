@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Currency Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+    }
+    select, input, button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h2>Currency Converter</h2>
+
+  <label>Amount:</label>
+  <input type="number" id="amount" placeholder="Enter amount" />
+
+  <label>From Currency:</label>
+  <select id="fromCurrency">
+    <option value="USD">USD</option>
+    <option value="INR">INR</option>
+    <option value="EUR">EUR</option>
+  </select>
+
+  <label>To Currency:</label>
+  <select id="toCurrency">
+    <option value="INR">INR</option>
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+  </select>
+
+  <button onclick="convertCurrency()">Convert</button>
+
+  <h3 id="result"></h3>
+
+  <script>
+    const exchangeRates = {
+      USD: { INR: 83.3, EUR: 0.93 },
+      INR: { USD: 0.012, EUR: 0.011 },
+      EUR: { USD: 1.07, INR: 89.4 },
+    };
+
+    function convertCurrency() {
+      const amount = parseFloat(document.getElementById("amount").value);
+      const from = document.getElementById("fromCurrency").value;
+      const to = document.getElementById("toCurrency").value;
+
+      if (isNaN(amount)) {
+        alert("Please enter a valid number");
+        return;
+      }
+
+      if (from === to) {
+        document.getElementById("result").innerText = `Converted Amount: ${amount} ${to}`;
+        return;
+      }
+
+      const rate = exchangeRates[from][to];
+      const converted = amount * rate;
+
+      document.getElementById("result").innerText = `Converted Amount: ${converted.toFixed(2)} ${to}`;
+    }
+  </script>
+</body>
+</html>
